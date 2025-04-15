@@ -5,13 +5,14 @@
 using namespace std;
 
 const string usename = "hakimi";
-const int password = 777;
+const string password = "777";
 const int falseK = 5;
 
 typedef struct user {
     string number;    // 电话号码
     string company;   // 公司名称
     string name;      // 姓名
+    string category;
     struct user* next;
     struct user* prev;
 } user;
@@ -89,7 +90,7 @@ bool login() {
         getline(cin, inputUsername);  // 读取用户名（可含空格）
 
         cout << "请输入密码：";
-        int inputPassword;
+        string inputPassword;
         cin >> inputPassword;
 
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -98,7 +99,7 @@ bool login() {
             success = true;
             break;
         } else {
-            cout << "用户名或密码错误！" << endl;
+            cout << "\n用户名或密码错误！" << endl;
             attempts--;
             if (attempts > 0)
                 cout << "请点击回车重试..." << endl;
@@ -121,11 +122,14 @@ void input()
     cout << "请输入联系人姓名: ";
     getline(cin, newUser->name);
 
-    cout << "请输入电话号码: ";
+    cout << "请输入其电话号码: ";
     getline(cin, newUser->number);
 
-    cout << "请输入公司名称: ";
+    cout << "请输入其公司名称: ";
     getline(cin, newUser->company);
+
+    cout << "请输入其类别：";
+    getline(cin, newUser->category);
 
     newUser->next = nullptr;
     newUser->prev = nullptr;
@@ -180,7 +184,6 @@ void delt() {
     cin >> needName;
 
     user* ptr = head;
-    // 查找要删除的节点
     while(ptr && ptr->name != needName){
         ptr = ptr->next;
     }
@@ -209,6 +212,12 @@ void delt() {
     cout << "\n联系人删除成功！" << endl;
 }
 void nameSearch(){
+    cout << "请输入要查找的姓名或姓：";
+    string keyWord;
+    cin >> keyWord;
+    cin.ignore();
+
+
 }
 void classSearch(){
 }
