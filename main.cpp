@@ -11,6 +11,7 @@ const string usename = "hakimi";
 const string password = "777";
 const int falseK = 5;
 
+int len = 0;
 typedef struct user {
     string name;      // 姓名
     string category;  // 关系
@@ -32,6 +33,7 @@ void nameSearch();
 void classSearch();
 void sum();
 void fuzzySearch();
+void show();
 void menu();
 
 int main()
@@ -53,6 +55,7 @@ int main()
             case 5: classSearch(); break;
             case 6: fuzzySearch(); break;
             case 7: sum(); break;
+            case 8: show(); break;
             default: cout << "非法选择，请重试！" << endl; break;
         }
         cout << "按回车返回主菜单...";
@@ -76,6 +79,7 @@ void menu()
     printf("\t\t\t| 5.类查找                                                               |\n");
     printf("\t\t\t| 6.模糊查找                                                             |\n");
     printf("\t\t\t| 7.统计                                                                 |\n");
+    printf("\t\t\t| 8.总览                                                                 |\n");
     printf("\t\t\t|------------------------------------------------------------------------|\n");
     printf("\t\t\t\tchoose the number:");
 }
@@ -120,6 +124,7 @@ bool login() {
 
 void input()
 {
+    len++;
     user* newUser = new user;
 
     cout << "请输入联系人姓名: ";
@@ -195,7 +200,7 @@ void delt() {
         cin.ignore();
         return;
     }
-
+    len--;
     // 删除的是头节点
     if(ptr == head){
         head = ptr->next;
@@ -333,6 +338,23 @@ void fuzzySearch(){
 
     if(!found){
         cout << "\n未找到符合条件的联系人！" << endl;
+    }
+}
+void show(){
+    if (!head) {
+        cout << "通讯录为空！" << endl;
+        return;
+    }
+
+    cout << "*总共有" << len << "位联系人*\n" << endl;
+    user* ptr = head;
+    while(ptr){
+        cout << "-----联系人-----" << endl;
+        cout << "姓名: " << ptr->name << endl;
+        cout << "关系: " << ptr->category << endl;
+        cout << "电话号码: " << ptr->number << endl;
+        cout << "公司: " << ptr->company << endl << endl;
+        ptr = ptr -> next;
     }
 }
 
