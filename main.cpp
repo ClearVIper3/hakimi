@@ -1,6 +1,9 @@
 #include <cstdio>
 #include <iostream>
+#include <vector>
+#include <iomanip>
 #include <string>
+#include <unordered_map>
 #include <limits>
 using namespace std;
 
@@ -9,10 +12,10 @@ const string password = "777";
 const int falseK = 5;
 
 typedef struct user {
+    string name;      // 姓名
+    string category;  // 关系
     string number;    // 电话号码
     string company;   // 公司名称
-    string name;      // 姓名
-    string category;
     struct user* next;
     struct user* prev;
 } user;
@@ -28,7 +31,7 @@ void delt();
 void nameSearch();
 void classSearch();
 void sum();
-void approSearch();
+void fuzzySearch();
 void menu();
 
 int main()
@@ -48,8 +51,8 @@ int main()
             case 3: delt(); break;
             case 4: nameSearch(); break;
             case 5: classSearch(); break;
-            case 6: sum(); break;
-            case 7: approSearch(); break;
+            case 6: fuzzySearch(); break;
+            case 7: sum(); break;
             default: cout << "非法选择，请重试！" << endl; break;
         }
         cout << "按回车返回主菜单...";
@@ -71,8 +74,8 @@ void menu()
     printf("\t\t\t| 3.删除                                                                 |\n");
     printf("\t\t\t| 4.名字查找                                                             |\n");
     printf("\t\t\t| 5.类查找                                                               |\n");
-    printf("\t\t\t| 6.人数                                                                 |\n");
-    printf("\t\t\t| 7.模糊查找                                                             |\n");
+    printf("\t\t\t| 6.模糊查找                                                             |\n");
+    printf("\t\t\t| 7.统计                                                                 |\n");
     printf("\t\t\t|------------------------------------------------------------------------|\n");
     printf("\t\t\t\tchoose the number:");
 }
@@ -180,7 +183,7 @@ void update(){
 }
 void delt() {
     string needName;
-    cout << "想要删除谁的信息？";
+    cout << "想要删除谁的信息？\n";
     cin >> needName;
 
     user* ptr = head;
@@ -217,11 +220,119 @@ void nameSearch(){
     cin >> keyWord;
     cin.ignore();
 
+    bool found = false;
+    user* ptr = head;
+    while(ptr)
+    {
+        if(ptr -> name.find(keyWord) != string::npos)
+        {
+            found = true;
+            cout << "-----联系人-----" << endl;
+            cout << "姓名: " << ptr -> name << endl;
+            cout << "关系: " << ptr -> category << endl;
+            cout << "电话号码: " << ptr -> number << endl;
+            cout << "公司: " << ptr -> company << endl << endl;
+        }
+        ptr = ptr -> next;
+    }
 
+    if(!found)
+        cout << "\n未找到相关联系人!" << endl;
 }
 void classSearch(){
+    cout << "请输入要查找的类别：";
+    string keyWord;
+    cin >> keyWord;
+    cin.ignore();
+
+    bool found = false;
+    user* ptr = head;
+    while(ptr)
+    {
+        if(ptr -> category.find(keyWord) != string::npos)
+        {
+            found = true;
+            cout << "-----联系人-----" << endl;
+            cout << "姓名: " << ptr -> name << endl;
+            cout << "关系: " << ptr -> category << endl;
+            cout << "电话号码: " << ptr -> number << endl;
+            cout << "公司: " << ptr -> company << endl << endl;
+        }
+        ptr = ptr -> next;
+    }
+
+    if(!found)
+        cout << "\n未找到相关联系人!" << endl;
 }
 void sum(){
+    unordered_map<string,int> mp;
+    user* ptr = head;
+    while(ptr)
+    {
+        string cate = ptr -> category;
+        mp[cate]++;
+        ptr = ptr -> next;
+    }
+
+    cout << "------------- 数据统计 ------------" << endl;
+    cout << "| " << left << setw(20) << "分类名称" << "| " << setw(10) << "人数" << "|" << endl;
+    cout << "-----------------------------------" << endl;
+
+    unordered_map<string, int>::const_iterator it;
+    for (it = mp.begin(); it != mp.end(); ++it) {
+        cout << "| " << left << setw(20) << it->first
+             << "| " << setw(10) << it->second << "|" << endl;
+    }
+
+    cout << "-----------------------------------" << endl;
 }
-void approSearch(){
+
+void fuzzySearch(){
+    cout << "请输入关键词（多个关键词用+连接）：";
+    string input;
+    getline(cin, input);
+
+    // 分割关键词
+    vector<string> keywords;
+    size_t pos = 0;
+    while ((pos = input.find('+')) != string::npos) {
+        string token = input.substr(0, pos);
+        keywords.push_back(token);
+        input.erase(0, pos + 1);
+    }
+    // 加入最后一个关键词
+    if (!input.empty())
+        keywords.push_back(input);
+
+    bool found = false;
+    user* ptr = head;
+
+    while(ptr){
+        // 将要搜索的内容整合成一个字符串，便于查找
+        string content = ptr->name + ptr->number + ptr->company + ptr->category;
+        bool match = true;
+
+        for(const string& kw : keywords){
+            if(content.find(kw) == string::npos){
+                match = false;
+                break;
+            }
+        }
+
+        if(match){
+            found = true;
+            cout << "-----联系人-----" << endl;
+            cout << "姓名: " << ptr->name << endl;
+            cout << "关系: " << ptr->category << endl;
+            cout << "电话号码: " << ptr->number << endl;
+            cout << "公司: " << ptr->company << endl << endl;
+        }
+
+        ptr = ptr->next;
+    }
+
+    if(!found){
+        cout << "\n未找到符合条件的联系人！" << endl;
+    }
 }
+
