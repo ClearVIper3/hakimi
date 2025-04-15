@@ -81,7 +81,7 @@ void menu()
     printf("\t\t\t| 7.统计                                                                 |\n");
     printf("\t\t\t| 8.总览                                                                 |\n");
     printf("\t\t\t|------------------------------------------------------------------------|\n");
-    printf("\t\t\t\tchoose the number:");
+    printf("\t\t\t 请输入对应的功能编号（0-8）：");
 }
 
 bool login() {
@@ -127,16 +127,16 @@ void input()
     len++;
     user* newUser = new user;
 
-    cout << "请输入联系人姓名: ";
+    cout << "请输入联系人姓名（如：张三）：";
     getline(cin, newUser->name);
 
-    cout << "请输入其电话号码: ";
+    cout << "请输入其电话号码（如：13800138000）：";
     getline(cin, newUser->number);
 
-    cout << "请输入其公司名称: ";
+    cout << "请输入其公司名称（如：腾讯）：";
     getline(cin, newUser->company);
 
-    cout << "请输入其类别：";
+    cout << "请输入其类别（如：朋友/家人/同事）：";
     getline(cin, newUser->category);
 
     newUser->next = nullptr;
@@ -159,7 +159,8 @@ void input()
 
 void update(){
     string needName;
-    cout << "想要修改谁的信息？";
+    cout << "请输入要修改的联系人姓名（区分大小写）：";
+
     cin >> needName;
 
     user* ptr = head;
@@ -172,7 +173,7 @@ void update(){
         return;
     }
 
-    cout << "更改公司请输入 'C' || 更改电话号码请输入 'N': ";
+    cout << "请输入要修改的信息类型（输入 C 表示公司，N 表示电话号码）：";
     char op;
     cin >> op;
     cin.ignore();
@@ -188,7 +189,7 @@ void update(){
 }
 void delt() {
     string needName;
-    cout << "想要删除谁的信息？\n";
+    cout << "请输入要删除的联系人姓名（区分大小写）：";
     cin >> needName;
 
     user* ptr = head;
@@ -245,7 +246,7 @@ void nameSearch(){
         cout << "\n未找到相关联系人!" << endl;
 }
 void classSearch(){
-    cout << "请输入要查找的类别：";
+    cout << "请输入要查找的联系人类别（如：朋友/同事/家人）：";
     string keyWord;
     cin >> keyWord;
     cin.ignore();
@@ -293,7 +294,7 @@ void sum(){
 }
 
 void fuzzySearch(){
-    cout << "请输入关键词（多个关键词用+连接）：";
+    cout << "请输入要模糊搜索的关键词（可输入多个，使用英文加号 '+' 分隔，如：张+腾讯）：";
     string input;
     getline(cin, input);
 
