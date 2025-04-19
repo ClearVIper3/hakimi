@@ -1,0 +1,59 @@
+# depslib dependency file v1.0
+1744794048 source:c:\users\30886\desktop\课设\addressbook\main.cpp
+	"contact.h"
+	"fileIO.h"
+	<cstdio>
+	<iostream>
+	<limits>
+	<string>
+
+1744791284 source:c:\users\30886\desktop\课设\addressbook\contact.cpp
+	"contact.h"
+	<iostream>
+	<vector>
+	<iomanip>
+	<unordered_map>
+	<limits>
+
+1744791260 c:\users\30886\desktop\课设\addressbook\contact.h
+	<string>
+
+1744993810 source:c:\users\30886\desktop\课设\addressbook\fileio.cpp
+	"fileIO.h"
+	<sstream>
+	<iostream>
+	<fstream>
+
+1744790306 c:\users\30886\desktop\课设\addressbook\fileio.h
+	<string>
+	"contact.h"
+
+1744791284 source:c:\users\李想\desktop\addressbook\contact.cpp
+	"contact.h"
+	<iostream>
+	<vector>
+	<iomanip>
+	<unordered_map>
+	<limits>
+
+1744791260 c:\users\李想\desktop\addressbook\contact.h
+	<string>
+
+1744794092 source:c:\users\李想\desktop\addressbook\fileio.cpp
+	"fileIO.h"
+	<sstream>
+	<iostream>
+	<fstream>
+
+1744790306 c:\users\李想\desktop\addressbook\fileio.h
+	<string>
+	"contact.h"
+
+1744794048 source:c:\users\李想\desktop\addressbook\main.cpp
+	"contact.h"
+	"fileIO.h"
+	<cstdio>
+	<iostream>
+	<limits>
+	<string>
+
